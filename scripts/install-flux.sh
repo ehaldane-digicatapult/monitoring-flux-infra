@@ -12,7 +12,7 @@
 INFRA_GIT=https://github.com/ehaldane-digicatapult/monitoring-flux-infra/
 INFRA_BRANCH=main
 CONTEXT_NAME=kind-monitoring-flux-infra
-INFRA_BASE_PATH=./clusters/kind-cluster/base
+INFRA_BASE_PATH=./examples/kind/base
 
 
 print_usage() {
@@ -29,7 +29,7 @@ print_usage() {
   echo "  -c        Specify the context name of your cluster"
   echo "            (default: kind-monitoring-flux-infra)"
   echo "  -p        Specify an alternative base path"
-  echo "            (default: ./clusters/kind-cluster/base)"
+  echo "            (default: ./examples/kind/base)"
   echo ""
   echo "Flags: "
   echo "  -h        Prints this message"
