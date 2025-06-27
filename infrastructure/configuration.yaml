@@ -16,8 +16,6 @@ configMapGenerator:
         app.kubernetes.io/part-of: flux
         grafana_dashboard: "1"
         kustomize.toolkit.fluxcd.io/substitute: disabled
-configurations:
-  - kustomize.yaml
 generatorOptions:
   disableNameSuffixHash: true
 resources:
