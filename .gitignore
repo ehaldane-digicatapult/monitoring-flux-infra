@@ -1,0 +1,4 @@
+*.log
+**/*.unc.yaml
+.vscode/
+.DS_Store

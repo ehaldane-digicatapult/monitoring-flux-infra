@@ -1,0 +1,18 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: monitoring
+resources:
+  - monitors/podmonitor.yaml
+configMapGenerator:
+  - name: base-dashboards
+    files:
+      - dashboards/cluster.json
+      - dashboards/logs.json
+      - dashboards/plane.json
+    options:
+      labels:
+        app.kubernetes.io/component: monitoring
+        app.kubernetes.io/part-of: flux
+        grafana_dashboard: "1"
+        kustomize.toolkit.fluxcd.io/substitute: disabled

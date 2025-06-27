@@ -1,0 +1,18 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: base-applications
+  namespace: flux-system
+spec:
+  interval: 5m
+  path: ./applications
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  postBuild:
+    substitute:
+      KUBE_PROMETHEUS_STACK_VERSION: "75.6.0"
+      LOKI_STACK_VERSION: "6.30.0"

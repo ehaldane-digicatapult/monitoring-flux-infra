@@ -1,0 +1,24 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: monitoring
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  ref:
+    branch: main
+  url: https://github.com/digicatapult/monitoring-flux-infra.git
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: monitoring-sync
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  path: ./clusters/azure/production
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: monitoring
