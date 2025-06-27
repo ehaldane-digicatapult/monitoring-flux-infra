@@ -9,7 +9,7 @@
 # creates the flux-system git source resource on the cluster
 # creates the flux-system kustomization on the cluster
 
-INFRA_GIT=https://github.com/digicatapult/monitoring-flux-infra/
+INFRA_GIT=https://github.com/ehaldane-digicatapult/monitoring-flux-infra/
 INFRA_BRANCH=main
 CONTEXT_NAME=kind-monitoring-flux-infra
 INFRA_BASE_PATH=./clusters/kind-cluster/base
@@ -23,7 +23,7 @@ print_usage() {
   echo ""
   echo "Options:"
   echo "  -g        Specify an alternative git repository. Note the default assumes http authentication"
-  echo "            (default: https://github.com/digicatapult/monitoring-flux-infra/)"
+  echo "            (default: https://github.com/ehaldane-digicatapult/monitoring-flux-infra/)"
   echo "  -b        Specify an alternative base branch to use."
   echo "            (default: main)"
   echo "  -c        Specify the context name of your cluster"
