@@ -1,6 +1,9 @@
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+metadata:
+  name: configuration-sync
+  namespace: monitoring
 configMapGenerator:
   - name: base-dashboards
     files:
@@ -17,6 +20,5 @@ configurations:
   - kustomize.yaml
 generatorOptions:
   disableNameSuffixHash: true
-namespace: monitoring
 resources:
   - monitors/podmonitor.yaml
