@@ -1,14 +1,15 @@
----
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: monitoring
+resources:
+  - kube-prometheus-stack
 configMapGenerator:
-  - name: base-values
+  - name: monitoring-values
     files:
       - kube-prometheus-stack-values.yaml=kube-prometheus-stack/values.yaml
-      - loki-stack-values.yaml=loki-stack/values.yaml
-  - name: base-kube-state-metrics
+  - name: flux-kube-state-metrics-config
     files:
-      - kube-state-metrics.yaml=kube-prometheus-stack/metrics.yaml
+      - kube-state-metrics-config.yaml=kube-prometheus-stack/kube-state-metrics-config.yaml
     options:
       labels:
         app.kubernetes.io/part-of: flux
@@ -17,8 +18,3 @@ configurations:
   - kustomize.yaml
 generatorOptions:
   disableNameSuffixHash: true
-namespace: monitoring
-resources:
-  - kube-prometheus-stack
-  - loki-stack
-  - sources.yaml

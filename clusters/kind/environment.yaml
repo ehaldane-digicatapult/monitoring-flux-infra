@@ -15,4 +15,4 @@ generatorOptions:
   disableNameSuffixHash: true
 resources:
   - applications.yaml
-  - infrastructure.yaml
+  # - infrastructure.yaml
