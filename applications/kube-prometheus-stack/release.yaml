@@ -11,7 +11,7 @@ spec:
         kind: HelmRepository
         name: prometheus-community
       # version: "75.6.0"
-      # version: ${KUBE_PROMETHEUS_STACK_VERSION}
+      version: ${KUBE_PROMETHEUS_STACK_VERSION}
   driftDetection:
     mode: enabled
     ignore:
