@@ -8,7 +8,7 @@ spec:
   interval: 1m0s
   ref:
     branch: main
-  url: https://github.com/digicatapult/monitoring-flux-infra.git
+  url: https://github.com/ehaldane-digicatapult/monitoring-flux-infra.git
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
