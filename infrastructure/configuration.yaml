@@ -5,8 +5,8 @@ configMapGenerator:
   - name: base-dashboards
     files:
       - dashboards/cluster.json
+      - dashboards/controlplane.json
       - dashboards/logs.json
-      - dashboards/plane.json
     options:
       labels:
         app.kubernetes.io/component: monitoring
