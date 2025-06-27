@@ -1,6 +1,9 @@
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+metadata:
+  name: environment-sync
+  namespace: monitoring
 configMapGenerator:
   - name: env-values
     files:
@@ -10,7 +13,6 @@ configurations:
   - kustomize.yaml
 generatorOptions:
   disableNameSuffixHash: true
-namespace: flux-system
 resources:
   - applications.yaml
   - infrastructure.yaml
