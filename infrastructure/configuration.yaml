@@ -1,9 +1,6 @@
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: monitoring
-resources:
-  - monitors/podmonitor.yaml
 configMapGenerator:
   - name: base-dashboards
     files:
@@ -16,3 +13,10 @@ configMapGenerator:
         app.kubernetes.io/part-of: flux
         grafana_dashboard: "1"
         kustomize.toolkit.fluxcd.io/substitute: disabled
+configurations:
+  - kustomize.yaml
+generatorOptions:
+  disableNameSuffixHash: true
+namespace: monitoring
+resources:
+  - monitors/podmonitor.yaml
