@@ -1,0 +1,79 @@
+# https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
+alertmanager:
+  enabled: true
+  serviceMonitor:
+    namespace: monitoring
+    selfMonitor: true
+prometheus:
+  prometheusSpec:
+    podMonitorNamespaceSelector: {}
+    podMonitorSelector:
+      matchLabels:
+        app.kubernetes.io/component: monitoring
+    podMonitorSelectorNilUsesHelmValues: false
+    resources:
+      requests:
+        cpu: 200m
+        memory: 200Mi
+    retention: 24h
+    serviceMonitorNamespaceSelector: {}
+    serviceMonitorSelectorNilUsesHelmValues: false
+  serviceMonitor:
+    selfMonitor: true
+    namespace: monitoring
+grafana:
+  additionalDataSources:
+    # - name: Loki
+    #   type: loki
+    #   url: http://loki-gateway.loki
+    #   access: proxy
+    #   isDefault: false
+    #   jsonData:
+    #     maxLines: 1000
+    - name: "Prometheus AlertManager"
+      type: camptocamp-prometheus-alertmanager-datasource
+      uid: prometheus-alertmanager
+      url: http://{{ template "kube-prometheus-stack.fullname" . }}-alertmanager.{{ template "kube-prometheus-stack.namespace" . }}:{{ .Values.alertmanager.service.port }}/{{ trimPrefix "/" .Values.alertmanager.alertmanagerSpec.routePrefix }}
+  adminPassword: grafana
+  dashboards:
+    default:
+      alertmanager:
+        gnetId: 9578
+        revision: 4
+        datasource: Prometheus
+      flux2:
+        gnetId: 16714
+        revision: 1
+        datasource: Prometheus
+      nginx:
+        gnetId: 9614
+        revision: 1
+        datasource: Prometheus
+      polkadot:
+        gnetId: 13840
+        revision: 4
+        datasource: Prometheus
+      postgresql:
+        gnetId: 9628
+        revision: 7
+        datasource: Prometheus
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+      - name: "default"
+        orgId: 1
+        folder: ""
+        type: file
+        disableDeletion: false
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards
+  defaultDashboardsEnabled: true
+  persistence:
+    enabled: true
+  plugins:
+    - camptocamp-prometheus-alertmanager-datasource
+  serviceMonitor:
+    enabled: true
+    namespace: monitoring
