@@ -7,7 +7,7 @@ metadata:
 spec:
   interval: 1m0s
   ref:
-    branch: feature/add_example_application
+    branch: bug/missing_kustomization_with_env_values
   url: https://github.com/ehaldane-digicatapult/monitoring-flux-infra.git
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
