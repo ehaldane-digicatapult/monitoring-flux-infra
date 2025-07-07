@@ -1,0 +1,27 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring
+spec:
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+      version: "71.1.0"
+  interval: 10m
+  valuesFrom:
+  # Shared/base values for monitoring applications
+  - kind: ConfigMap
+    name: base-values
+    valuesKey: kube-prometheus-stack-values.yaml
+  # Environment-specific values
+  - kind: ConfigMap
+    name: env-values
+    valuesKey: kube-prometheus-stack-values.yaml
+  # Additional configuration for dashboards, metrics, or infrastructure
+  - kind: ConfigMap
+    name: base-config
+    valuesKey: kube-state-metrics-config.yaml
