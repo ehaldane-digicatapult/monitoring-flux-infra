@@ -8,8 +8,7 @@ This is a work-in-progress [FluxCD](https://fluxcd.io/) repository to bring up c
 ```
 .
 ├── applications
-│   ├── kube-prometheus-stack
-│   └── loki-stack
+│   └── kube-prometheus-stack
 ├── clusters
 │   ├── azure
 │   │   └── production
@@ -43,7 +42,7 @@ Within `sources.yaml`, there are the Helm and OCI repositories for all component
 
 ### Clusters
 
-Where there are references here to clusters or environments, they are best thought of as _types_ of deployment. This repository is intended to abstract monitoring components and be a step removed; each project will need to integrate the relevant type of deployment as a kustomization, with this repository as an extra GitRepository in any base cluster directories. A base directory will contain a unique `flux-system` somewhere along its path.
+Where there are references here to clusters or environments, they are best thought of as _types_ of deployment. This repository is intended to abstract monitoring components and be a step removed; each project will need to integrate the relevant type of cluster being deployed via a specific kustomization, e.g. "monitoring-sync". This monitoring repository will be an extra GitRepository in any project.
 
 Anticipate including the following `monitoring-sqnc.yaml` along the base path of new or existing project clusters:
 
@@ -51,7 +50,7 @@ Anticipate including the following `monitoring-sqnc.yaml` along the base path of
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
-  name: monitoring
+  name: monitoring-flux-infra
   namespace: flux-system
 spec:
   interval: 1m0s
@@ -63,17 +62,18 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: monitoring-sync
-  namespace: flux-system
+  namespace: monitoring
 spec:
   interval: 10m0s
-  path: ./clusters/kind
+  path: ./applications
   prune: true
   sourceRef:
     kind: GitRepository
-    name: monitoring
+    name: monitoring-flux-infra
+    namespace: flux-system
 ```
 
-Note `spec.url` and `spec.path`, the latter should reflect the cluster type needed. If the project has multiple clusters, then each `monitoring-sync.yaml` would likely need to correspond to a different type.
+If the project has multiple clusters, then several `monitoring-sync.yaml` files will be required, each corresponding to the relevant type.
 
 
 ### Examples
@@ -160,7 +160,7 @@ Some attention needs to be given to the precedence of values; the last values fi
 
 To provide an example of the above, there could be relevant values files in three separate locations:
 - `applications/kube-prometheus-stack/values.yaml`
-- `clusters/kind/substitutions/kube-prometheus-stack-values.yaml`
-- `clusters/azure/production/substitutions/kube-prometheus-stack-values.yaml`
+- `clusters/kind/substitutions/kube-prometheus-stack/values.yaml`
+- `clusters/azure/production/substitutions/kube-prometheus-stack/values.yaml`
 
 By default, the specific values for each of the above cluster types will always override the shared ones.
