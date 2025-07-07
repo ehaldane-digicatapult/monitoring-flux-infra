@@ -27,11 +27,11 @@ spec:
   # Shared/base values for monitoring applications
   - kind: ConfigMap
     name: base-values
-    valuesKey: kube-prometheus-stack.yaml
+    valuesKey: kube-prometheus-stack-values.yaml
   # Environment-specific values
   - kind: ConfigMap
     name: env-values
-    valuesKey: kube-prometheus-stack.yaml
+    valuesKey: kube-prometheus-stack-values.yaml
   - kind: ConfigMap
     name: base-config
     valuesKey: kube-state-metrics-config.yaml
