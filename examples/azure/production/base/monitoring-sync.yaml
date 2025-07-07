@@ -3,7 +3,7 @@ apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
   name: monitoring-flux-infra
-  namespace: monitoring
+  namespace: flux-system
 spec:
   interval: 1m0s
   ref:
@@ -22,18 +22,4 @@ spec:
   sourceRef:
     kind: GitRepository
     name: monitoring-flux-infra
-    namespace: monitoring
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: env-sync
-  namespace: monitoring
-spec:
-  interval: 10m0s
-  path: ./clusters/azure/production
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: monitoring-flux-infra
-    namespace: monitoring
+    namespace: flux-system

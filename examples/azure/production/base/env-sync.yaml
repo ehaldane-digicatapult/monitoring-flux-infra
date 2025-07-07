@@ -6,7 +6,7 @@ metadata:
   namespace: monitoring
 spec:
   interval: 10m0s
-  path: ./clusters/kind
+  path: ./clusters/azure/production
   prune: true
   sourceRef:
     kind: GitRepository
