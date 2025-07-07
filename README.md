@@ -18,14 +18,12 @@ This is a work-in-progress [FluxCD](https://fluxcd.io/) repository to bring up c
 ├── examples
 │   ├── azure
 │   │   └── production
-│   │       ├── base
-│   │       │   └── flux-system
+│   │       └── base
+│   │           └── flux-system
 │   └── kind
-│       ├── base
-│       │   └── flux-system
+│       └── base
+│           └── flux-system
 ├── infrastructure
-│   ├── controllers
-│   ├── dashboards
 │   └── monitors
 └── scripts
 ```
