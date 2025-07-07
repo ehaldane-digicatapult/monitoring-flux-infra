@@ -6,6 +6,8 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
+  ref:
+    branch: main
   url: https://github.com/ehaldane-digicatapult/monitoring-flux-infra.git
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
