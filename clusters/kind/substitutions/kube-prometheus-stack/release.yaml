@@ -12,24 +12,14 @@ spec:
         name: prometheus-community
       version: "71.1.0"
   interval: 10m
-  install:
-    crds: Create
-  upgrade:
-    crds: CreateReplace
-  dependsOn:
-    - name: env-sync
-      namespace: monitoring
-  driftDetection:
-    mode: enabled
-    ignore:
-      # Ignore "validated" annotation which is not inserted during install
-      - paths: [ "/metadata/annotations/prometheus-operator-validated" ]
-        target:
-          kind: PrometheusRule
   valuesFrom:
   # Shared/base values for monitoring applications
   - kind: ConfigMap
     name: base-values
+    valuesKey: kube-prometheus-stack-values.yaml
+  # Environment-specific values
+  - kind: ConfigMap
+    name: env-values
     valuesKey: kube-prometheus-stack-values.yaml
   # Additional configuration for dashboards, metrics, or infrastructure
   - kind: ConfigMap
