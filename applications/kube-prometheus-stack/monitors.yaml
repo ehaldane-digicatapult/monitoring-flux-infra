@@ -6,7 +6,7 @@ metadata:
   namespace: monitoring
 spec:
   interval: 1m
-  path: ./infrastructure/configs
+  path: ./infrastructure/monitors
   prune: true
   dependsOn:
     - name: monitoring-sync
