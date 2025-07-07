@@ -16,6 +16,9 @@ spec:
     crds: Create
   upgrade:
     crds: CreateReplace
+  dependsOn:
+    - name: env-sync
+      namespace: monitoring
   driftDetection:
     mode: enabled
     ignore:
