@@ -31,7 +31,7 @@ metadata:
   namespace: monitoring
 spec:
   interval: 10m0s
-  path: ./cluster/kind
+  path: ./clusters/kind
   prune: true
   sourceRef:
     kind: GitRepository
