@@ -2,12 +2,15 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: monitoring-sync
+  name: dashboards-sync
   namespace: monitoring
 spec:
-  interval: 10m0s
-  path: ./applications
+  interval: 1m
+  path: ./infrastructure/dashboards
   prune: true
+  dependsOn:
+    - name: monitoring-sync
+      namespace: monitoring
   sourceRef:
     kind: GitRepository
     name: monitoring-flux-infra

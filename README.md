@@ -1,4 +1,4 @@
-# Monitoring FluxCD Infrastructure
+# monitoring-flux-infra
 
 This is a work-in-progress [FluxCD](https://fluxcd.io/) repository to bring up common monitoring applications and infrastructure for integration across different Kubernetes clusters, depending on the requirements of the respective projects.
 
@@ -71,7 +71,26 @@ spec:
     namespace: flux-system
 ```
 
-If the project has multiple clusters, then several `monitoring-sync.yaml` files will be required, each corresponding to the relevant type.
+A separate `env-sync.yaml` kustomization should point to the cluster type:
+
+```yaml
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: env-sync
+  namespace: monitoring
+spec:
+  interval: 10m0s
+  path: ./clusters/kind
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: monitoring-flux-infra
+    namespace: flux-system
+```
+
+If the project has multiple clusters, then several `monitoring-sync.yaml` and `env-sync.yaml` files will be required, residing on the relevant base path.
 
 
 ### Examples
