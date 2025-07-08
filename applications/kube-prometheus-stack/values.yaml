@@ -4,23 +4,7 @@ alertmanager:
   serviceMonitor:
     namespace: monitoring
     selfMonitor: true
-prometheus:
-  prometheusSpec:
-    podMonitorNamespaceSelector: {}
-    podMonitorSelector:
-      matchLabels:
-        app.kubernetes.io/component: monitoring
-    podMonitorSelectorNilUsesHelmValues: false
-    resources:
-      requests:
-        cpu: 200m
-        memory: 200Mi
-    retention: 24h
-    serviceMonitorNamespaceSelector: {}
-    serviceMonitorSelectorNilUsesHelmValues: false
-  serviceMonitor:
-    selfMonitor: true
-    namespace: monitoring
+
 grafana:
   additionalDataSources:
     # - name: Loki
@@ -45,9 +29,17 @@ grafana:
         gnetId: 16714
         revision: 1
         datasource: Prometheus
+      keycloak:
+        gnetId: 19659
+        revision: 1
+        datasource: Prometheus
       nginx:
         gnetId: 9614
         revision: 1
+        datasource: Prometheus
+      node-exporter-full:
+        gnetId: 1860
+        revision: 37
         datasource: Prometheus
       polkadot:
         gnetId: 13840
@@ -56,6 +48,10 @@ grafana:
       postgresql:
         gnetId: 9628
         revision: 7
+        datasource: Prometheus
+      velero:
+        gnetId: 16829
+        revision: 5
         datasource: Prometheus
   dashboardProviders:
     dashboardproviders.yaml:
@@ -77,3 +73,29 @@ grafana:
   serviceMonitor:
     enabled: true
     namespace: monitoring
+
+prometheus:
+  prometheusSpec:
+    podMonitorNamespaceSelector: {}
+    podMonitorSelector:
+      matchLabels:
+        app.kubernetes.io/component: monitoring
+    podMonitorSelectorNilUsesHelmValues: false
+    resources:
+      requests:
+        cpu: 200m
+        memory: 200Mi
+    retention: 24h
+    serviceMonitorNamespaceSelector: {}
+    serviceMonitorSelectorNilUsesHelmValues: false
+  serviceMonitor:
+    selfMonitor: true
+    namespace: monitoring
+
+prometheus-node-exporter:
+  prometheus:
+    monitor:
+      relabelings:
+      - action: replace
+        sourceLabels: [__meta_kubernetes_pod_node_name]
+        targetLabel: nodename
